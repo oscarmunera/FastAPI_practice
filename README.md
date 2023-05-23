@@ -1,2 +1,2 @@
 # FastAPI_practice
-Reporsitorio de practica FastAPI
+Repositorio de practica FastAPI
