@@ -6,7 +6,7 @@ from models.item_model import Item
 app = FastAPI()
 
 
-fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"},{"item_name": "Buzzz"}]
 
 @app.get("/")
 async def root():
