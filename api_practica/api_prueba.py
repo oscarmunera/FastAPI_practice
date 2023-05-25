@@ -1,6 +1,6 @@
 from typing import Optional
 from uuid import uuid4 as uuid
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 class Producto(BaseModel):
@@ -35,4 +35,4 @@ def obtener_product_id(producto_id: str):
     for producto in productos:
         if producto.id == producto_id:
             return producto
-    return {'mensaje': 'proucto no encontado'}    
+    raise HTTPException(status_code=404,detail='id de producto no encontrado')
