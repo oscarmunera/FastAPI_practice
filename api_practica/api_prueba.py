@@ -36,3 +36,12 @@ def obtener_product_id(producto_id: str):
         if producto.id == producto_id:
             return producto
     raise HTTPException(status_code=404,detail='id de producto no encontrado')
+
+@app.delete('/productos/{producto_id}')
+def eliminar_producto(producto_id: str):
+    for producto in productos:
+        if producto.id == producto_id:
+            productos.remove(producto)
+            return {'mensaje': 'Producto eliminado'}
+    raise HTTPException(status_code=404,detail='id de producto no encontrado, no se puede eliminar')
+
