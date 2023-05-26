@@ -20,7 +20,7 @@ def index():
 
 
 @app.get('/productos')
-def obtener_productos():
+def obtener_lista_productos():
     return productos
 
 
@@ -31,7 +31,7 @@ def crear_productos(producto: Producto):
     return {'mensaje': 'producto creado'}
 
 @app.get('/productos/{producto_id}')
-def obtener_product_id(producto_id: str):
+def obtener_producto_id(producto_id: str):
     for producto in productos:
         if producto.id == producto_id:
             return producto
@@ -47,12 +47,13 @@ def eliminar_producto(producto_id: str):
 
 @app.put('/productos/{producto_id}')
 def actualizar_producto(producto_id: str, producto: Producto):
-    for i, producto_encontrado in enumerate(productos):
-        if producto_encontrado.id == producto_id:
-            productos[i].nombre = producto.nombre
-            productos[i].precio_compra = producto.precio_compra
-            productos[i].precio_venta = producto.precio_venta
-            productos[i].proveedor = producto.proveedor
-            return productos[i]
-    raise HTTPException(status_code=404, detail='id de producto no encontrado, modificar')
+    try:
+        producto_encontrado = next(p for p in productos if p.id == producto_id)
+        producto_encontrado.nombre = producto.nombre
+        producto_encontrado.precio_compra = producto.precio_compra
+        producto_encontrado.precio_venta = producto.precio_venta
+        producto_encontrado.proveedor = producto.proveedor
+        return producto_encontrado
+    except StopIteration:
+        raise HTTPException(status_code=404, detail='id de producto no encontrado, modificar')
 
